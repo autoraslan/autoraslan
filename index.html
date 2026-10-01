@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض أوتو رسلان للسيارات المستوردة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #131b2e;
+            --primary: #d4af37;
+            --primary-hover: #e5c158;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(212, 175, 55, 0.2);
+            --transition: all 0.4s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+
+        header {
+            background: rgba(19, 27, 46, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+            padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area i { font-size: 2rem; color: var(--primary); }
+        .logo-area h2 { font-size: 1.6rem; font-weight: 800; }
+        .logo-area span { color: var(--primary); }
+
+        .contact-badge {
+            color: var(--text-main); font-size: 0.95rem;
+            background: rgba(212, 175, 55, 0.1); padding: 8px 15px;
+            border-radius: 8px; border: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 8px; text-decoration: none;
+            transition: var(--transition);
+        }
+        .contact-badge:hover { background: rgba(212, 175, 55, 0.2); }
+
+        .promo-banner {
+            background: linear-gradient(135deg, #131b2e, #1a253f);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 5%; text-align: center; color: var(--primary); font-weight: 600;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+
+        .filters-section {
+            padding: 30px 5% 10px;
+            display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;
+        }
+
+        .search-box { position: relative; flex: 1; min-width: 280px; }
+        .search-box input {
+            width: 100%; padding: 14px 20px 14px 50px;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; color: var(--text-main); font-size: 1rem; outline: none;
+        }
+        .search-box input:focus { border-color: var(--primary); }
+        .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--primary); }
+
+        .category-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            color: var(--text-muted); padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 500;
+            transition: var(--transition);
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
+
+        .cars-container {
+            padding: 30px 5% 60px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px;
+        }
+
+        .car-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; overflow: hidden; transition: var(--transition); display: flex; flex-direction: column;
+        }
+        .car-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: var(--primary); }
+
+        .car-img-wrapper { position: relative; height: 220px; overflow: hidden; }
+        .car-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .car-card:hover .car-img-wrapper img { transform: scale(1.08); }
+        .car-badge {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(5px);
+            color: var(--primary); padding: 6px 14px; font-size: 0.85rem; font-weight: 700; border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .car-details { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .car-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+        .car-specs {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+            margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .spec-item { text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .spec-item i { display: block; color: var(--primary); font-size: 1rem; margin-bottom: 4px; }
+
+        .car-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .car-price { font-size: 1.25rem; font-weight: 900; color: var(--primary); }
+        .btn-details {
+            background: transparent; border: 1px solid var(--primary); color: var(--primary);
+            padding: 8px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: var(--transition);
+        }
+        .btn-details:hover { background: var(--primary); color: var(--bg-dark); }
+
+        /* Modal تفاصيل السيارة والحجز */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 8, 15, 0.85); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+            opacity: 0; visibility: hidden; transition: var(--transition); padding: 20px;
+        }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            width: 100%; max-width: 850px; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8); max-height: 90vh; display: flex; flex-direction: column;
+        }
+        .modal-header { padding: 20px 25px; background: rgba(11, 15, 25, 0.9); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
+        .modal-header h3 { color: var(--primary); font-size: 1.5rem; }
+        .close-modal { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
+        .close-modal:hover { color: var(--primary); }
+        .modal-body { padding: 25px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .modal-img { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); }
+        .modal-features { list-style: none; margin-bottom: 20px; }
+        .modal-features li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.95rem; }
+        .modal-features li span { color: var(--text-main); font-weight: 600; }
+
+        .booking-form input {
+            width: 100%; padding: 10px 15px; margin-bottom: 10px;
+            background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); outline: none;
+        }
+        .btn-book {
+            width: 100%; background: var(--primary); color: var(--bg-dark); border: none;
+            padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: var(--transition);
+        }
+        .btn-book:hover { background: var(--primary-hover); }
+
+        footer { text-align: center; padding: 25px; background: rgba(11, 15, 25, 0.9); border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; }
+
+        @media(max-width: 768px) { .modal-body { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-car-rear"></i>
+            <h2>أوتو <span>رسلان</span></h2>
+        </div>
+        <div class="header-actions">
+            <a href="https://wa.me/966536324243" target="_blank" class="contact-badge">
+                <i class="fa-brands fa-whatsapp" style="color: #25d366; font-size: 1.2rem;"></i>
+                <span>0536324243</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="promo-banner" id="promoBanner">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span id="promoText">عروض خاصة على أحدث السيارات المستوردة من كوريا الجنوبية مباشرة!</span>
+    </div>
+
+    <section class="filters-section">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="ابحث باسم الموديل أو الفئة..." oninput="filterCars()">
+        </div>
+        <div class="category-filters">
+            <button class="filter-btn active" onclick="setCategory('all', this)">الكل</button>
+            <button class="filter-btn" onclick="setCategory('سيدان', this)">سيدان</button>
+            <button class="filter-btn" onclick="setCategory('دفع رباعي', this)">دفع رباعي</button>
+            <button class="filter-btn" onclick="setCategory('فاخرة', this)">فاخرة</button>
+        </div>
+    </section>
+
+    <div class="cars-container" id="carsGrid">
+        <!-- يتم جلب السيارات تلقائياً -->
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة &copy; 2026 معرض أوتو رسلان للسيارات المستوردة
+    </footer>
+
+    <!-- نافذة تفاصيل السيارة والحجز -->
+    <div class="modal" id="carModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">تفاصيل السيارة</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // جلب السيارات المخزنة عبر لوحة التحكم (LocalStorage للتخزين المشترك بين الملفين)
+        let carsData = JSON.parse(localStorage.getItem('raslan_cars')) || [
+            {
+                id: 1,
+                name: "جينيسيس G80 - Luxury (2023)",
+                category: "فاخرة",
+                price: "135,000 ر.س",
+                image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80",
+                year: "2023",
+                mileage: "24,000 كم"
+            },
+            {
+                id: 2,
+                name: "كيا سورينتو - Signature (2022)",
+                category: "دفع رباعي",
+                price: "98,000 ر.س",
+                image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+                year: "2022",
+                mileage: "35,000 كم"
+            }
+        ];
+
+        let currentCategory = 'all';
+
+        function displayCars(cars) {
+            const grid = document.getElementById('carsGrid');
+            grid.innerHTML = '';
+
+            if(cars.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">عذراً، لا توجد سيارات متوفرة حالياً تطابق بحثك.</div>`;
+                return;
+            }
+
+            cars.forEach(car => {
+                grid.innerHTML += `
+                    <div class="car-card">
+                        <div class="car-img-wrapper">
+                            <span class="car-badge">${car.year}</span>
+                            <img src="${car.image}" alt="${car.name}">
+                        </div>
+                        <div class="car-details">
+                            <h3 class="car-title">${car.name}</h3>
+                            <div class="car-specs">
+                                <div class="spec-item">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>${car.year}</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fa-solid fa-gauge"></i>
+                                    <span>${car.mileage}</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fa-solid fa-circle-check" style="color: #27ae60;"></i>
+                                    <span>جاهز</span>
+                                </div>
+                            </div>
+                            <div class="car-footer">
+                                <span class="car-price">${car.price}</span>
+                                <button class="btn-details" onclick="openModal(${car.id})">التفاصيل</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function setCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterCars();
+        }
+
+        function filterCars() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = carsData.filter(car => {
+                const matchesCategory = currentCategory === 'all' || car.category === currentCategory;
+                const matchesSearch = car.name.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+            displayCars(filtered);
+        }
+
+        function openModal(carId) {
+            const car = carsData.find(c => c.id === carId);
+            if(!car) return;
+
+            document.getElementById('modalTitle').innerText = car.name;
+            document.getElementById('modalBody').innerHTML = `
+                <div>
+                    <img src="${car.image}" alt="${car.name}" class="modal-img">
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 15px; color: var(--text-main);">مواصفات السيارة</h4>
+                    <ul class="modal-features">
+                        <li>سنة الصنع: <span>${car.year}</span></li>
+                        <li>الممشى: <span>${car.mileage}</span></li>
+                        <li>السعر الإجمالي: <span style="color: var(--primary);">${car.price}</span></li>
+                    </ul>
+
+                    <div style="background: rgba(11, 15, 25, 0.5); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--primary);">حجز استفسار / موعد معاينة</h4>
+                        <input type="text" id="clientName" placeholder="الاسم الكريم">
+                        <input type="tel" id="clientPhone" placeholder="رقم الجوال">
+                        <button class="btn-book" onclick="submitBooking('${car.name}')">تأكيد طلب الحجز</button>
+                        <a href="https://wa.me/966536324243?text=السلام عليكم، أستفسر عن سيارة ${car.name}" target="_blank" style="display: block; text-align: center; margin-top: 12px; color: #25d366; text-decoration: none; font-size: 0.9rem;">
+                            <i class="fa-brands fa-whatsapp"></i> تواصل عبر الواتساب مباشرة
+                        </a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('carModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('carModal').classList.remove('active');
+        }
+
+        function submitBooking(carName) {
+            const name = document.getElementById('clientName').value;
+            const phone = document.getElementById('clientPhone').value;
+
+            if(!name || !phone) {
+                alert('الرجاء إدخال الاسم ورقم الجوال للمتابعة.');
+                return;
+            }
+
+            let bookings = JSON.parse(localStorage.getItem('raslan_bookings')) || [];
+            bookings.push({ car: carName, name, phone, date: new Date().toLocaleDateString('ar-SA') });
+            localStorage.setItem('raslan_bookings', JSON.stringify(bookings));
+
+            alert(`شكراً لك يا ${name}! تم تسجيل طلبك بنجاح وسنتواصل معك قريباً.`);
+            closeModal();
+        }
+
+        window.onload = function() {
+            displayCars(carsData);
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) closeModal();
+        }
+    </script>
+</body>
+</html>
