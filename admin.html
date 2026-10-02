@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة والتحكم | معرض أوتو رسلان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #131b2e;
+            --primary: #d4af37;
+            --primary-hover: #e5c158;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(212, 175, 55, 0.2);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 30px 5%;
+        }
+
+        /* نافذة تسجيل الدخول الخاصة بالإدارة */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 25, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(8px);
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        .login-card h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-card .admin-input {
+            margin-bottom: 15px;
+        }
+
+        .login-error {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: none; /* تظهر بعد تسجيل الدخول الصحيح */
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .admin-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .admin-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .admin-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .admin-input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-action-admin {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn-action-admin:hover {
+            background: var(--primary-hover);
+        }
+
+        .admin-cars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-car-row {
+            background: rgba(11, 15, 25, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .admin-car-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-car-info img {
+            width: 70px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- نافذة تسجيل الدخول للمدير (الرقم الوظيفي 1000 وكلمة المرور 2283) -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <h3><i class="fa-solid fa-lock" style="color: var(--primary);"></i> تسجيل دخول الإدارة</h3>
+            <input type="text" id="empId" class="admin-input" placeholder="الرقم الوظيفي">
+            <input type="password" id="empPass" class="admin-input" placeholder="كلمة المرور">
+            <div id="loginError" class="login-error">الرقم الوظيفي أو كلمة المرور غير صحيحة</div>
+            <button class="btn-action-admin" onclick="checkLogin()">دخول لوحة التحكم</button>
+        </div>
+    </div>
+
+    <div class="admin-container" id="adminPanelContent">
+        <div class="admin-header">
+            <h2 class="admin-title"><i class="fa-solid fa-sliders"></i> لوحة إدارة أوتو رسلان</h2>
+            <a href="index.html" class="back-btn">
+                <i class="fa-solid fa-house"></i> العودة للموقع الرسمي
+            </a>
+        </div>
+
+        <!-- قسم إضافة سيارة -->
+        <div class="admin-box">
+            <h3><i class="fa-solid fa-circle-plus" style="color: var(--primary);"></i> إضافة سيارة جديدة للمعرض</h3>
+            <div class="form-grid">
+                <input type="text" id="newCarName" class="admin-input" placeholder="اسم السيارة (مثل: جينيسيس GV80)">
+                <input type="text" id="newCarPrice" class="admin-input" placeholder="السعر (مثل: 145,000 ر.س)">
+                <select id="newCarCategory" class="admin-input">
+                    <option value="فاخرة">فاخرة</option>
+                    <option value="سيدان">سيدان</option>
+                    <option value="دفع رباعي">دفع رباعي</option>
+                </select>
+                <input type="text" id="newCarYear" class="admin-input" placeholder="سنة الصنع (مثل: 2023)">
+                <input type="text" id="newCarEngine" class="admin-input" placeholder="المحرك (مثل: 3.5 لتر توربو)">
+                <input type="text" id="newCarMileage" class="admin-input" placeholder="الممشى (مثل: 20,000 كم)">
+                <input type="text" id="newCarImage" class="admin-input" placeholder="رابط صورة السيارة (URL)">
+            </div>
+            <button class="btn-action-admin" style="width: auto;" onclick="addNewCar()">حفظ وإضافة للمعرض</button>
+        </div>
+
+        <!-- قسم إدارة السيارات الحالية (حذف) -->
+        <div class="admin-box">
+            <h3><i class="fa-solid fa-car" style="color: var(--primary);"></i> السيارات المعروضة حالياً (تحديث فوري للموقع)</h3>
+            <div class="admin-cars-list" id="adminCarsList">
+                <!-- تعبئة تلقائية -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من بيانات تسجيل الدخول
+        function checkLogin() {
+            const idInput = document.getElementById('empId').value.trim();
+            const passInput = document.getElementById('empPass').value.trim();
+            const errorMsg = document.getElementById('loginError');
+
+            if (idInput === "1000" && passInput === "2283") {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('adminPanelContent').style.display = 'block';
+                renderAdminList();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        const defaultCars = [
+            {
+                id: 1,
+                name: "جينيسيس G80",
+                category: "فاخرة",
+                price: "135,000 ر.س",
+                image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80",
+                year: "2023",
+                engine: "3.5 لتر توربو",
+                mileage: "24,000 كم"
+            },
+            {
+                id: 2,
+                name: "كيا سورينتو",
+                category: "دفع رباعي",
+                price: "98,000 ر.س",
+                image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+                year: "2022",
+                engine: "2.5 لتر GDI",
+                mileage: "35,000 كم"
+            },
+            {
+                id: 3,
+                name: "هيونداي سوناتا",
+                category: "سيدان",
+                price: "79,000 ر.س",
+                image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80",
+                year: "2023",
+                engine: "2.0 لتر سمارت",
+                mileage: "18,000 كم"
+            }
+        ];
+
+        let carsData = JSON.parse(localStorage.getItem('raslan_cars')) || defaultCars;
+
+        function saveAndSync() {
+            localStorage.setItem('raslan_cars', JSON.stringify(carsData));
+        }
+
+        function renderAdminList() {
+            const listContainer = document.getElementById('adminCarsList');
+            listContainer.innerHTML = '';
+
+            if(carsData.length === 0) {
+                listContainer.innerHTML = `<div style="color: var(--text-muted);">لا توجد سيارات حالياً في المعرض.</div>`;
+                return;
+            }
+
+            carsData.forEach(car => {
+                listContainer.innerHTML += `
+                    <div class="admin-car-row">
+                        <div class="admin-car-info">
+                            <img src="${car.image}" alt="${car.name}">
+                            <div>
+                                <div style="font-weight: 700; font-size: 1.05rem;">${car.name}</div>
+                                <div style="color: var(--primary); font-size: 0.9rem;">${car.price} | موديل ${car.year}</div>
+                            </div>
+                        </div>
+                        <button class="btn-delete" onclick="deleteCar(${car.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addNewCar() {
+            const name = document.getElementById('newCarName').value;
+            const price = document.getElementById('newCarPrice').value;
+            const category = document.getElementById('newCarCategory').value;
+            const year = document.getElementById('newCarYear').value || '2023';
+            const engine = document.getElementById('newCarEngine').value || 'محرك كوري عالي الأداء';
+            const mileage = document.getElementById('newCarMileage').value || '20,000 كم';
+            const image = document.getElementById('newCarImage').value || 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80';
+
+            if(!name || !price) {
+                alert('الرجاء إدخال اسم السيارة والسعر على الأقل.');
+                return;
+            }
+
+            const newCar = {
+                id: Date.now(),
+                name,
+                price,
+                category,
+                year,
+                engine,
+                mileage,
+                image
+            };
+
+            carsData.unshift(newCar);
+            saveAndSync();
+            renderAdminList();
+
+            // تفريغ الحقول بعد الإضافة
+            document.getElementById('newCarName').value = '';
+            document.getElementById('newCarPrice').value = '';
+            document.getElementById('newCarYear').value = '';
+            document.getElementById('newCarEngine').value = '';
+            document.getElementById('newCarMileage').value = '';
+            document.getElementById('newCarImage').value = '';
+
+            alert('تمت إضافة السيارة بنجاح وتم ربطها وتحديث الموقع الرسمي فوراً!');
+        }
+
+        function deleteCar(id) {
+            if(confirm('هل أنت متأكد من حذف هذه السيارة؟')) {
+                carsData = carsData.filter(car => car.id !== id);
+                saveAndSync();
+                renderAdminList();
+            }
+        }
+    </script>
+</body>
+</html>
