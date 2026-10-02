@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض أوتو رسلان للسيارات | الوجهة الأولى للسيارات المستوردة من كوريا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #131b2e;
+            --primary: #d4af37;
+            --primary-hover: #e5c158;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(212, 175, 55, 0.2);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(19, 27, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* تعديل منطقة اللوجو لتبدو احترافية */
+        .showroom-logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), #aa820a);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-dark);
+            font-size: 1.4rem;
+            font-weight: 900;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .logo-text h2 {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .logo-text h2 span {
+            color: var(--primary);
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .header-contact {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .header-contact a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            direction: ltr;
+        }
+
+        .btn-admin-nav {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-admin-nav:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        .hero-banner {
+            padding: 50px 5% 20px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-banner h1 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-banner p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .filters-section {
+            padding: 20px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* تحسين طريقة عرض السيارات (شبكية حديثة ومتجاوبة) */
+        .cars-container {
+            padding: 20px 5% 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media(max-width: 768px) {
+            .cars-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .car-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .car-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: var(--primary);
+        }
+
+        .car-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 230px;
+            overflow: hidden;
+        }
+
+        .car-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .car-card:hover .car-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .car-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(5px);
+            color: var(--primary);
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .car-details {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .car-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .car-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .spec-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .spec-item i {
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .spec-item span {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .car-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .car-price {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background: #20ba5a;
+            transform: scale(1.03);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(11, 15, 25, 0.9);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <!-- بديل أيقونة السيارة: لوجو المعرض الفاخر -->
+            <div class="showroom-logo">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <div class="logo-text">
+                <h2>أوتو <span>رسلان</span></h2>
+                <p>KOREAN CARS IMPORT</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="header-contact">
+                <i class="fa-solid fa-phone-alt" style="color: var(--primary);"></i>
+                <span>المبيعات:</span>
+                <a href="tel:0536324243">0536324243</a>
+            </div>
+            <a href="admin.html" class="btn-admin-nav">
+                <i class="fa-solid fa-lock"></i> لوحة الإدارة
+            </a>
+        </div>
+    </header>
+
+    <div class="hero-banner">
+        <h1>معرض أوتو رسلان للسيارات</h1>
+        <p>نخبة السيارات الفاخرة المستوردة من كوريا الجنوبية بأعلى مواصفات الجودة والاعتمادية.</p>
+    </div>
+
+    <section class="filters-section">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن الموديل أو الفئة..." oninput="filterCars()">
+        </div>
+        <div class="category-filters">
+            <button class="filter-btn active" onclick="setCategory('all', this)">الكل</button>
+            <button class="filter-btn" onclick="setCategory('سيدان', this)">سيدان</button>
+            <button class="filter-btn" onclick="setCategory('دفع رباعي', this)">دفع رباعي</button>
+            <button class="filter-btn" onclick="setCategory('فاخرة', this)">فاخرة</button>
+        </div>
+    </section>
+
+    <!-- قائمة السيارات المعروضة -->
+    <div class="cars-container" id="carsGrid"></div>
+
+    <footer>
+        جميع الحقوق محفوظة &copy; 2026 معرض أوتو رسلان للسيارات
+    </footer>
+
+    <script>
+        const defaultCars = [
+            {
+                id: 1,
+                name: "جينيسيس G80",
+                category: "فاخرة",
+                price: "135,000 ر.س",
+                image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80",
+                year: "2023",
+                engine: "3.5 لتر توربو",
+                mileage: "24,000 كم"
+            },
+            {
+                id: 2,
+                name: "كيا سورينتو",
+                category: "دفع رباعي",
+                price: "98,000 ر.س",
+                image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+                year: "2022",
+                engine: "2.5 لتر GDI",
+                mileage: "35,000 كم"
+            },
+            {
+                id: 3,
+                name: "هيونداي سوناتا",
+                category: "سيدان",
+                price: "79,000 ر.س",
+                image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80",
+                year: "2023",
+                engine: "2.0 لتر سمارت",
+                mileage: "18,000 كم"
+            }
+        ];
+
+        let carsData = JSON.parse(localStorage.getItem('raslan_cars')) || defaultCars;
+        let currentCategory = 'all';
+
+        function displayCars(cars) {
+            const grid = document.getElementById('carsGrid');
+            grid.innerHTML = '';
+
+            if(cars.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">عذراً، لا توجد سيارات معروضة حالياً. يمكنك إضافتها عبر لوحة الإدارة.</div>`;
+                return;
+            }
+
+            cars.forEach(car => {
+                // إعداد رسالة الواتساب التلقائية مع اسم السيارة والسعر والرابط الحالي
+                const carUrl = window.location.href;
+                const whatsappMessage = encodeURIComponent(`السلام عليكم، أستفسر بخصوص حجز أو معاينة السيارة التالية:\n\n🚗 *${car.name}*\n🏷️ الفئة: ${car.category}\n💰 السعر: ${car.price}\n📅 الموديل: ${car.year || '2023'}\n\nرابط السيارة: ${carUrl}`);
+                const whatsappLink = `https://wa.me/966536324243?text=${whatsappMessage}`;
+
+                grid.innerHTML += `
+                    <div class="car-card">
+                        <div class="car-img-wrapper">
+                            <span class="car-badge">${car.category}</span>
+                            <img src="${car.image || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70'}" alt="${car.name}">
+                        </div>
+                        <div class="car-details">
+                            <div>
+                                <h3 class="car-title">${car.name}</h3>
+                                <div class="car-specs">
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-calendar"></i>
+                                        <span>${car.year || '2023'}</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-gauge"></i>
+                                        <span>${car.mileage || '20,000 كم'}</span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <i class="fa-solid fa-gears"></i>
+                                        <span>${car.engine || 'محرك كوري'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="car-footer">
+                                <span class="car-price">${car.price}</span>
+                                <a href="${whatsappLink}" target="_blank" class="btn-whatsapp">
+                                    <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> حجز / استفسار
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function setCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterCars();
+        }
+
+        function filterCars() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = carsData.filter(car => {
+                const matchesCategory = currentCategory === 'all' || car.category === currentCategory;
+                const matchesSearch = car.name.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+            displayCars(filtered);
+        }
+
+        displayCars(carsData);
+    </script>
+</body>
+</html>
